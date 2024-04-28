@@ -1,31 +1,41 @@
+"use client";
 import { AtorSelectProps } from "@/types";
+import { useAtorList } from "@/utils/useAtorList";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Skeleton } from "@nextui-org/skeleton";
-import { useAsyncList } from "@react-stately/data";
+import { useInfiniteScroll } from "@nextui-org/use-infinite-scroll";
+import { useState } from "react";
 
-function AtorSelect({ label, isLoaded, data, onSelect }: AtorSelectProps) {
-  let list = useAsyncList({
-    async load({ signal, filterText }) {
-      console.log(data);
-      let slicedData = data.slice(0, 100);
-      return {
-        items: slicedData,
-        // cursor: cursor + 100,
-      };
-    },
+function AtorSelect({ label, value, onSelect }: AtorSelectProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const { items, hasMore, isLoading, onLoadMore } = useAtorList();
+  const [, scrollerRef] = useInfiniteScroll({
+    hasMore,
+    isEnabled: isOpen,
+    shouldUseLoader: false,
+    onLoadMore,
   });
-  console.log(list.items);
+
   return (
-    <Skeleton isLoaded={isLoaded}>
-      {/* <Autocomplete items={list.items} label={label} onSelect={onSelect}>
-        {list.items.map((ator: string) => {
-          return (
-            <AutocompleteItem key={ator} value={ator}>
-              {ator}
-            </AutocompleteItem>
-          );
-        })}
-      </Autocomplete> */}
+    <Skeleton isLoaded={!isLoading}>
+      <Autocomplete
+        variant="bordered"
+        isLoading={isLoading}
+        defaultItems={items}
+        label={label}
+        scrollRef={scrollerRef}
+        onOpenChange={setIsOpen}
+        multiple={false}
+        placeholder={label + "..."}
+        inputValue={value}
+        onInputChange={(e) => onSelect(e)}
+      >
+        {items.map((item, index) => (
+          <AutocompleteItem key={index} value={item}>
+            {item}
+          </AutocompleteItem>
+        ))}
+      </Autocomplete>
     </Skeleton>
   );
 }

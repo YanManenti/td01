@@ -2,3 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+.group[data-selected=true] .group-data-\[selected\=true\]\:bg-default-400  {
+    
+    background-color: #22d3ee !important;
+}

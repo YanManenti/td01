@@ -1,60 +1,47 @@
 "use client";
 import { Button } from "@nextui-org/button";
 import AtorSelect from "./AtorSelect";
-import { useEffect, useState } from "react";
-import { AtorSelectProps } from "@/types";
-
-async function fetchAtores(url: string) {
-  const data = await fetch(url)
-    .then((response) => response.json())
-    .then((data) => data);
-  let atores: string[] = [];
-  data.forEach((movie: any) => {
-    movie.cast.map((ator: string) => {
-      if (atores.findIndex((a) => a === ator) === -1) {
-        atores.push(ator);
-      }
-    });
-  });
-  return atores;
-}
+import { useState } from "react";
+import { Switch } from "@nextui-org/switch";
+import "@/styles/globals.css";
 
 function SearchComponent() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState<string[]>([]);
-  const [atorOrigem, setAtorOrigem] = useState(null);
-  const [atorDestino, setAtorDestino] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchAtores("latest_movies.json");
-      // console.log(data);
-      return data;
-    };
-    setIsLoaded(false);
-    fetchData().then((data) => {
-      setData(data);
-      setIsLoaded(true);
-    });
-  }, []);
+  const [atorOrigem, setAtorOrigem] = useState();
+  const [atorDestino, setAtorDestino] = useState();
+  const [seisConexoes, setSeisConexoes] = useState(false);
 
   return (
     <div className="w-full h-full flex flex-col justify-between">
       <div className="w-full h-fit flex flex-col gap-4">
+        <h3 className="font-bold text-xl">Atores</h3>
         <AtorSelect
-          data={data}
-          isLoaded={isLoaded}
           label="Ator Origem"
-          onSelect={(e) => console.log(e)}
+          value={atorOrigem ?? ""}
+          onSelect={(e) => setAtorOrigem(e)}
         />
         <AtorSelect
-          data={data}
-          isLoaded={isLoaded}
           label="Ator Destino"
-          onSelect={(e) => console.log(e)}
+          value={atorDestino ?? ""}
+          onSelect={(e) => setAtorDestino(e)}
         />
+        <h3 className="font-bold text-xl">Opções</h3>
+        <Switch
+          className="switchTeste"
+          color="default"
+          isSelected={seisConexoes}
+          onClick={() => setSeisConexoes((current) => !current)}
+        >
+          6 Conexões
+        </Switch>
       </div>
-      <Button>Click me</Button>
+      <Button
+        className="bg-cyan-400 hover:bg-cyan-500 text-white font-bold"
+        onClick={() => {
+          console.log({ atorOrigem, atorDestino, seisConexoes });
+        }}
+      >
+        SEARCH
+      </Button>
     </div>
   );
 }
