@@ -17,11 +17,11 @@ async function fetchAtores(url: string) {
 
 export function useAtorList() {
   const [fullList, setFullList] = useState<string[]>([]);
-  const [items, setItems] = useState<string[]>([]);
+  const [items, setItems] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [offset, setOffset] = useState(50);
-  const limit = 50; // Number of items per page, adjust as necessary
+  const [offset, setOffset] = useState(1);
+  const limit = 20; // Number of items per page, adjust as necessary
 
   const loadAtor = async (currentOffset: number) => {
     const controller = new AbortController();
@@ -29,10 +29,17 @@ export function useAtorList() {
 
     try {
       setIsLoading(true);
+
       // Fetch the next batch of items
-      let json = { results: fullList.splice(items.length, currentOffset) };
+      const response = await fetch(
+        `https://api.javascripttutorial.net/v1/quotes/?page=${offset}&limit=${limit}`
+      ).then((response) => response.json());
+
+      let json = { results: response.data };
+
       // Check if there are more items to load
-      setHasMore(currentOffset !== fullList.length);
+      setHasMore(json.results.length < response.total);
+
       // Append new results to existing ones
       setItems((prevItems) => [...prevItems, ...json.results]);
     } catch (error: any) {
@@ -42,25 +49,24 @@ export function useAtorList() {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchAtores("latest_movies.json");
-      return data.sort((a: string, b: string) => a.localeCompare(b));
-    };
-    fetchData().then((data) => {
-      setFullList(data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await fetchAtores("latest_movies.json");
+  //     return data.sort((a: string, b: string) => a.localeCompare(b));
+  //   };
+  //   fetchData().then((data) => {
+  //     setFullList(data);
+  //   });
+  // }, []);
 
   useEffect(() => {
     loadAtor(offset);
-  }, [fullList]);
+  }, [offset]);
 
   const onLoadMore = () => {
-    const newOffset =
-      offset + limit >= fullList.length ? offset : offset + limit;
+    // const newOffset = offset + limit >= fullList.length ? offset : offset + limit;
+    const newOffset = offset + 1;
     setOffset(newOffset);
-    loadAtor(newOffset);
   };
 
   return {

@@ -28,11 +28,11 @@ function AtorSelect({ label, value, onSelect }: AtorSelectProps) {
         multiple={false}
         placeholder={label + "..."}
         inputValue={value}
-        onInputChange={(e) => onSelect(e)}
+        onInputChange={onSelect}
       >
         {items.map((item, index) => (
-          <AutocompleteItem key={index} value={item}>
-            {item}
+          <AutocompleteItem key={index} value={item.author}>
+            {item.author}
           </AutocompleteItem>
         ))}
       </Autocomplete>
