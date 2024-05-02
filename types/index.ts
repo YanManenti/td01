@@ -6,6 +6,7 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 
 export type AtorSelectProps = {
   label: string;
-  value: string | undefined;
+  value?: string;
+  isLoaded?: boolean;
   onSelect: (e: any) => void;
 };

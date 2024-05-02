@@ -4,6 +4,7 @@ import AtorSelect from "./AtorSelect";
 import { useState } from "react";
 import { Switch } from "@nextui-org/switch";
 import "@/styles/globals.css";
+import AtorAsync from "./AtorAsync";
 
 function SearchComponent() {
   const [atorOrigem, setAtorOrigem] = useState();
@@ -19,9 +20,14 @@ function SearchComponent() {
           value={atorOrigem ?? ""}
           onSelect={(e) => setAtorOrigem(e)}
         />
-        <AtorSelect
+        {/* <AtorSelect
           label="Ator Destino"
           value={atorDestino ?? ""}
+          onSelect={(e) => setAtorDestino(e)}
+        /> */}
+        <AtorAsync
+          label="Ator Destino"
+          value={atorDestino}
           onSelect={(e) => setAtorDestino(e)}
         />
         <h3 className="font-bold text-xl">Opções</h3>

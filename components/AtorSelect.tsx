@@ -1,6 +1,6 @@
 "use client";
 import { AtorSelectProps } from "@/types";
-import { useAtorList } from "@/utils/useAtorList";
+import { useAtorList } from "@/utils/hooks/useAtorList";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Skeleton } from "@nextui-org/skeleton";
 import { useInfiniteScroll } from "@nextui-org/use-infinite-scroll";
