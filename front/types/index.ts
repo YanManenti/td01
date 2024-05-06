@@ -10,3 +10,13 @@ export type AtorSelectProps = {
   isLoaded?: boolean;
   onSelect: (e: any) => void;
 };
+
+export type SearchProps = {
+  starting?: string;
+  target?: string;
+  sixConnections?: boolean;
+};
+
+export type SearchComponentProps = {
+  setSearch: (e: SearchProps) => void;
+};
