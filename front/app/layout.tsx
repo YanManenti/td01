@@ -25,12 +25,12 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
+          "box-border min-h-screen bg-background font-sans antialiased",
           robotoCondensed.variable
         )}
       >
-        <div className="relative flex flex-col h-screen">
-          <main className="container mx-auto max-w-7xl py-12 px-12 flex-grow">
+        <div className="relative flex flex-col h-full">
+          <main className="container mx-auto max-w-7xl p-12 flex-grow max-h-full">
             {children}
           </main>
         </div>
