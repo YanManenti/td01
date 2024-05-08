@@ -40,8 +40,8 @@ function AtorAsync({
       onInputChange={handleInputChangeDebounce}
     >
       {items.map((item) => (
-        <AutocompleteItem key={item.id} value={item.name}>
-          {item.name}
+        <AutocompleteItem key={item} value={item}>
+          {item}
         </AutocompleteItem>
       ))}
     </Autocomplete>

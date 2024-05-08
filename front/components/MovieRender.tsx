@@ -1,9 +1,10 @@
 function MovieRender({ item }: any) {
   function handleColorChange(actor: string) {
-    if (actor === item.from.name) return "bg-green-300";
-    if (actor === item.to.name) return "bg-red-300";
-    if (actor === item.starting) return "bg-violet-200";
-    if (actor === item.target) return "bg-violet-200";
+    if (actor === item.starting) return "bg-green-300";
+    if (actor === item.target) return "bg-red-300";
+    if (actor === item.from.name) return "bg-violet-200";
+    if (actor === item.to.name) return "bg-violet-200";
+
     return "bg-slate-400";
   }
   return (
@@ -18,7 +19,7 @@ function MovieRender({ item }: any) {
                 actor
               )}`}
             >
-              <p className="font-bold text-xs text-white">{actor}</p>
+              <p className="font-bold text-[11px] text-white">{actor}</p>
             </div>
           );
         })}
