@@ -26,9 +26,14 @@ function ResultComponent({ starting, target, sixConnections }: SearchProps) {
     <div className="w-full h-full max-h-full flex flex-col gap-2">
       <ResultTop />
       <div className="w-full overflow-x-hidden overflow-auto flex flex-col gap-2 h-[95%] max-h-[95%] ">
-        {result?.map((item) => (
-          <div key={item.movie.id + Math.random()}>
-            <MovieRender item={{ ...item, starting, target }} />
+        {result?.map((connection, index) => (
+          <div key={index} className="flex flex-col gap-2">
+            <p className="font-bold text-sm">#{index + 1}</p>
+            {connection?.map((movie: any) => (
+              <div key={movie.movie.id + Math.random()}>
+                <MovieRender item={{ ...movie, starting, target }} />
+              </div>
+            ))}
           </div>
         ))}
         {result.length === 0 && target && starting && (
